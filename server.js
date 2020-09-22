@@ -1,7 +1,8 @@
 const express = require('express');
-const sendMail = require('./mail.js')
-const app = express();
 const path = require('path');
+const sendMail = require('./mail/mail');
+const app = express();
+
 
 const PORT = 3000;
 
@@ -13,7 +14,7 @@ app.use(express.json());
 app.post('/email', (req,res)=> {
     //TODO
     //SEND EMAIL HERE
-    const { subject,email, tetx} = req.body;
+    const { subject,email, text} = req.body;
     console.log('Data: ',req.body);
     sendMail(email, subject, text, function(err, data){
         if (err) {
@@ -25,8 +26,6 @@ app.post('/email', (req,res)=> {
     
 });
 
-
-app.listen();
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views','index.html'));
